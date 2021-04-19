@@ -1,4 +1,6 @@
 const express=require('express');
+const path=require('path');
+const rootDir=require('./util/path');
 require('dotenv').config();
 
 const app=express();
@@ -6,8 +8,10 @@ const app=express();
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
-app.use('/',(req,res,next) => {
-    res.json('Response from Server');
+app.use(express.static('public'));
+
+app.get('/',(req,res,next) => {
+    res.sendFile(path.join(rootDir,'index.html'));
 });
 
 const port=process.env.port;
